@@ -75,6 +75,11 @@ def apply_bow(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: i
         test_df['label'] = y_test
 
         pickle.dump(vectorizer, open('models/vectorizer.pkl', 'wb'))
+        #the reason why we saved this vectorizer is because when we create our flask app 
+        #we will receive text from the user 
+        #we will clean it (preprocessing)
+        #and we will have to perform feature engineering (BoW)
+        #saving this vectorizer means we will nit have to write the entire bow code again in the flask app 
 
 
 

@@ -88,6 +88,7 @@ def register_model(model_name: str, model_info: dict):
             model_version.version
         )
 
+
         # Transition model to Staging
         client = mlflow.tracking.MlflowClient()
 
@@ -103,12 +104,45 @@ def register_model(model_name: str, model_info: dict):
             model_version.version
         )
 
+        return model_version.version
+
     except Exception as e:
         logger.error(
             "Error during model registration: %s",
             e
         )
         raise
+
+def promote_model(model_name: str, version: int):
+
+    try: 
+        client = mlflow.tracking.MlflowClient()
+
+        logger.debug(f"Promoting model {version} to Production model_name: {model_name}")
+
+
+        # Move Staging version to Production
+        client.transition_model_version_stage(
+            name=model_name,
+            version=version,
+            stage="Production",
+            archive_existing_versions=True
+        )
+
+        client.set_registered_model_alias(
+            name=model_name,
+            alias="champion",
+            version=version
+        )
+
+        logger.debug(f"Model {version} promoted to Production. {model_name}, {version}")
+    except Exception as e:
+        logger.error(f"Error Promoting model version {version} to Production {e}")
+        raise
+
+
+
+
 
 
 def main():
@@ -124,10 +158,11 @@ def main():
 
         model_name = "my_model"
 
-        register_model(
-            model_name,
-            model_info
-        )
+        version  = register_model(model_name, model_info)
+
+        promote_model(model_name, version)
+
+        logger.debug( "Model registration and promotion completed successfully." )
 
     except Exception as e:
 

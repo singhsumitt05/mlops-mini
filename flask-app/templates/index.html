@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ML Text Prediction</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Text Prediction</h1>
+
+        <p class="subtitle">
+            Enter your text and let the ML model make a prediction.
+        </p>
+
+        <form action="/predict" method="POST">
+
+            <textarea
+                name="text"
+                placeholder="Enter your text here..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Predict
+            </button>
+
+        </form>
+
+        {% if result is not none %}
+
+        <div class="result">
+
+            <div class="result-title">
+                Prediction
+            </div>
+
+            <div class="result-value">
+                {% if result == 0 %}
+                    <h2>Sadness</h2>
+                {% else %}
+                    <h2>Happiness</h2>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <div class="footer">
+            Powered by Flask + MLflow
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
