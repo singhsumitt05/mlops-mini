@@ -5,14 +5,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
+
       - name: code checkout
         uses: actions/checkout@v3
 
       - name: setup python 
         uses: actions/setup-python@v2
         with: 
-          python-versions: '3.12'
+          python-versions: '3.10'
 
       - name: install dependencies
         run: |
