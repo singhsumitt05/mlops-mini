@@ -141,7 +141,6 @@ def main():
 
             # Save model information
             model_info = {
-                "model_id": logged_model.model_id,
                 "model_uri": logged_model.model_uri,
                 "run_id": run.info.run_id,
                 "model_path": "model"
