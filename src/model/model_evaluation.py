@@ -136,7 +136,7 @@ def main():
             # Log model to MLflow
             logged_model = mlflow.sklearn.log_model(
                 clf,
-                name="model"
+                "model"
             )
 
             # Save model information
