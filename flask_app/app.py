@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import os
 
-from preprocessing_utility import normalize_text
+from flask_app.preprocessing_utility import normalize_text
 
 # Set up DagsHub credentials for MLflow tracking
 dagshub_token = os.getenv("DAGSHUB_PAT")
