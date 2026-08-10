@@ -5,7 +5,7 @@ import dagshub
 import os
 
 
-# Set up MLflow tracking URI
+
 # Set up DagsHub credentials for MLflow tracking
 dagshub_token = os.getenv("DAGSHUB_PAT")
 if not dagshub_token:
@@ -103,13 +103,12 @@ def register_model(model_name: str, model_info: dict):
             stage="Staging"
         )
 
+
         logger.debug(
             "Model %s version %s transitioned to Staging.",
             model_name,
             model_version.version
         )
-
-        return model_version.version
 
     except Exception as e:
         logger.error(
@@ -117,37 +116,6 @@ def register_model(model_name: str, model_info: dict):
             e
         )
         raise
-
-def promote_model(model_name: str, version: int):
-
-    try: 
-        client = mlflow.tracking.MlflowClient()
-
-        logger.debug(f"Promoting model {version} to Production model_name: {model_name}")
-
-
-        # Move Staging version to Production
-        client.transition_model_version_stage(
-            name=model_name,
-            version=version,
-            stage="Production",
-            archive_existing_versions=True
-        )
-
-        client.set_registered_model_alias(
-            name=model_name,
-            alias="champion",
-            version=version
-        )
-
-        logger.debug(f"Model {version} promoted to Production. {model_name}, {version}")
-    except Exception as e:
-        logger.error(f"Error Promoting model version {version} to Production {e}")
-        raise
-
-
-
-
 
 
 def main():
@@ -163,11 +131,10 @@ def main():
 
         model_name = "my_model"
 
-        version  = register_model(model_name, model_info)
+        register_model(model_name, model_info)
 
-        promote_model(model_name, version)
 
-        logger.debug( "Model registration and promotion completed successfully." )
+        logger.debug( "Model registration completed successfully." )
 
     except Exception as e:
 

@@ -11,7 +11,7 @@ import mlflow.sklearn
 import dagshub
 import os
 
-#
+
 
 
 
@@ -150,8 +150,7 @@ def main():
                 json.dump(model_info, file, indent=4)
 
             logger.debug(
-                "Model logged successfully. Model ID: %s",
-                logged_model.model_id
+                "Model logged successfully"
             )
                         
             # Save model info
